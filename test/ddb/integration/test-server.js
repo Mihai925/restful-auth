@@ -13,21 +13,9 @@ var runServer = () => {
 
 var assert = require('assert')
 describe('Integration', function() {
-
-    var ddbLocal = new DdbLocal();
-
-    before(function (done){
-        ddbLocal.start(done);
-      }
-    );
-
     describe('DDB+Express', function(){
       it('should integrate properly', function() {
         runServer();
       })
-    });
-
-    after(function(done) {
-      ddbLocal.stop(done);
     });
 });
