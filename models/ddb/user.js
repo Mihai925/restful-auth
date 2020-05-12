@@ -1,7 +1,7 @@
 
 module.exports = (dynamoose) => {
-const user = dynamoose.model ("Users",
-  new dynamoose.Schema({
+return dynamoose.model("User",
+    {
       "username": {
         "hashKey": true,
         "type": String,
@@ -11,14 +11,10 @@ const user = dynamoose.model ("Users",
         "type": String,
         "required": true
       },
-      "email": {
+      "group": {
         "type": String,
-        "required": true,
-        "index": {
-          "name": "emailIndex",
-          "global": true
-        }
+        "required": false
       }
-    })
+    }
   )
 }
