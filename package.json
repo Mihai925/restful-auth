@@ -11,7 +11,7 @@
     "url": "git+https://github.com/Mihai925/restful-auth.git"
   },
   "author": "Mihai Jiplea",
-  "license": "AGPL-3.0-or-later",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Mihai925/restful-auth/issues"
   },
