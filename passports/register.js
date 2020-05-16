@@ -2,7 +2,7 @@ const BCRYPT_SALT_ROUNDS = 5;
 const bcrypt = require("bcrypt");
 
 module.exports =
-(passport, LocalStrategy, JWTStrategy, ExtractJWT, User) => {
+  (passport, LocalStrategy, User) => {
     passport.use(
       'register',
       new LocalStrategy(

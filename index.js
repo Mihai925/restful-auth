@@ -13,12 +13,13 @@ module.exports = (app, config) => {
   JWTStrategy = require('passport-jwt').Strategy,
   ExtractJWT = require('passport-jwt').ExtractJwt,
   User = require('./models/ddb/user')(config.db);
+  JWTSecret = require('./config/jwtConfig');
 
-  //Register the models
-  require('./models/ddb/user.js')(db);
+
 
   //Create passports
-  require('./passports/register')(passport, LocalStrategy, JWTStrategy, ExtractJWT, User)
+  require('./passports/jwt')(ExtractJWT, JWTStrategy, JWTSecret, passport, User)
+  require('./passports/register')(passport, LocalStrategy, User)
 
   require('./api/register')(app, passport)
 
