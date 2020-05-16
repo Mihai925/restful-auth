@@ -44,7 +44,6 @@ describe('Integration', function() {
         app = express();
         app.use(bodyParser.json());
         ddbInstance = await new DdbLocalServer.launch("3456", null, ['-sharedDb'], true, true);
-        console.log("DDB here")
 
         //var tab = await ddb_client.deleteTable({TableName: "User"}).promise();
         //console.log(tab);
@@ -55,7 +54,6 @@ describe('Integration', function() {
           dialect: 'dynamodb',
           db: dynamoose
         })
-        console.log("Checkpoint here")
       })
 
       afterEach(async () => {
