@@ -13,13 +13,11 @@ module.exports =
             try {
 
               const user = await User.get({"username": username});
-              if(user === null) {
-                console.log("Authentication failed");
+              if(user === undefined) {
                 return done(null, false, {message: "Authentication failed"});
               }
               const passwordMatch = bcrypt.compareSync(password, user.password);
               if(!passwordMatch) {
-                console.log("Authentication failed");
                 return done(null, false, {message: "Authentication failed"});
               }
               return done(null, user);
