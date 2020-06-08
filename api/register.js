@@ -12,7 +12,6 @@ module.exports = (app, passport) => {
         res.status(500).send(info.message);
         return;
       }
-      console.log("Reg worked, it seems?");
       res.status(200).send({message:"User created" });
     })(req, res, next);
   })

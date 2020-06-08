@@ -16,13 +16,6 @@ var runServer = (test_function) => {
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const bodyParser = require('body-parser');
-//TODO use this:
-//const AWS = require('aws-sdk');
-//AWS.config.update({
-//  region: "us-west-2",
-//  endpoint: "http://localhost:8000"
-//});
-//const ddb_client = new AWS.DynamoDB({endpoint: new AWS.Endpoint('http://localhost:3456')});;
 const expect = chai.expect;
 
 chai.use(chaiHttp);
@@ -45,8 +38,6 @@ describe('Integration', function() {
         app.use(bodyParser.json());
         ddbInstance = await new DdbLocalServer.launch("3456", null, ['-sharedDb'], true, true);
 
-        //var tab = await ddb_client.deleteTable({TableName: "User"}).promise();
-        //console.log(tab);
         dynamoose.aws.ddb.local("http://localhost:3456");
 
 
@@ -61,17 +52,21 @@ describe('Integration', function() {
         console.log("Stopping DDB");
       })
 
-      it('should register a user', () => {
-        return chai.request(app)
+      it('should register and login a user', async () => {
+        const regRequest = await chai.request(app)
           .post('/api/register')
           .send({'username':'john', 'password':'pwd12345'})
-          .then((res) => {
-            expect(res).to.have.status(200);
-          })
           .catch(function (err) {
             console.log(err);
           });
-
+        const loginRequest = await chai.request(app)
+          .post('/api/login')
+          .send({'username':'john', 'password':'pwd12345'})
+          .catch(function (err) {
+            console.log(err);
+          });
+        expect(regRequest).to.have.status(200);
+        expect(loginRequest).to.have.status(200);
       })
 
 
