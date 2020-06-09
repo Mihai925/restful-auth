@@ -16,5 +16,5 @@ return dynamoose.model("User",
         "required": false
       }
     }
-  )
-}
+  );
+};

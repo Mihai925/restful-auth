@@ -15,8 +15,8 @@ describe('Integration', function() {
       var app;
       var ddbInstance;
       beforeEach(async () => {
-        DdbLocalServer = require('dynamodb-local')
-        dynamoose = null
+        DdbLocalServer = require('dynamodb-local');
+        dynamoose = null;
         dynamoose = require("dynamoose");
         restfulAuth = require("../../../index.js");
         express = require("express");
@@ -29,7 +29,7 @@ describe('Integration', function() {
         restfulAuth(app, {
           dialect: 'dynamodb',
           db: dynamoose
-        })
+        });
       });
 
       afterEach(async () => {
@@ -85,5 +85,5 @@ describe('Integration', function() {
           expect(loginResponse.body).to.have.property('auth').eql(false);
       });
 
-    })
+    });
 });

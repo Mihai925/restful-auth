@@ -15,22 +15,22 @@ module.exports =
             //console.log(User);
             const userNameMatch = await User.get({"username": username});
             if(userNameMatch != undefined) {
-              return done(null, false, {message: 'username and/or email already exists'})
+              return done(null, false, {message: 'username and/or email already exists'});
             }
 
             bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(async (hashedPassword) => {
                 const newUser = new User({
                   "username": username,
                   "password": hashedPassword
-                })
-                await newUser.save()
+                });
+                await newUser.save();
                 return done(null, newUser);
               }
-            )
+            );
           } catch (err) {
-            done(err)
+            done(err);
           }
         }
       )
-    )
-}
+    );
+};

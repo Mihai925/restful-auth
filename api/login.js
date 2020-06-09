@@ -1,4 +1,3 @@
-
 module.exports =
   (app, passport, JWTSecret, User, jwt) => {
     app.post('/api/login', (req, res, next) => {
@@ -21,5 +20,5 @@ module.exports =
           });
         }
       })(req, res, next);
-    })
-  }
+    });
+  };
