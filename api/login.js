@@ -15,7 +15,8 @@ module.exports =
             const token = jwt.sign({ id: loginUser.username}, JWTSecret.secret);
             res.status(200).send({
               auth: true,
-              token: token
+              token: token,
+              group: loginUser.group
             });
           });
         }

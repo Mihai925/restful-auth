@@ -13,7 +13,11 @@ return dynamoose.model("User",
       },
       "group": {
         "type": String,
-        "required": false
+        "required": false,
+        "index": {
+          "name": "groupIndex",
+          "global": true
+        }
       }
     }
   );

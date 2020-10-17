@@ -53,6 +53,7 @@ describe('Integration', function() {
         expect(loginResponse).to.have.status(200);
         expect(loginResponse.body).to.have.property('token');
         expect(loginResponse.body).to.have.property('auth').eql(true);
+        expect(loginResponse.body).to.have.property('group').eql("standard");
       });
 
       it('should not login a user that is not registered', async () => {
@@ -85,5 +86,22 @@ describe('Integration', function() {
           expect(loginResponse.body).to.have.property('auth').eql(false);
       });
 
+      it('should register and login a user belonging to a custom group', async () => {
+        const regResponse = await chai.request(app)
+          .post('/api/register')
+          .send({'username':'john', 'password':'pwd12345', 'group': 'customgroup'})
+          .catch(function (err) {
+            console.log(err);
+          });
+        const loginResponse = await chai.request(app)
+          .post('/api/login')
+          .send({'username':'john', 'password':'pwd12345'})
+          .catch(function (err) {
+            console.log(err);
+          });
+        expect(regResponse).to.have.status(200);
+        expect(loginResponse).to.have.status(200);
+        expect(loginResponse.body).to.have.property('group').eql("customgroup");
+      });
     });
 });
