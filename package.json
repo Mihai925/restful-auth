@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Mihai925/restful-auth#readme",
   "peerDependencies": {
-    "dynamoose": "^2.1.0"
+    "dynamoose": "^2.7.0"
   },
   "devDependencies": {
     "aws-sdk": "^2.678.0",
@@ -25,7 +25,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "dynamodb-local": "0.0.31",
-    "dynamoose": "^2.1.0",
+    "dynamoose": "^2.7.0",
     "express": "^4.17.1",
     "mocha": "^7.1.2"
   },
