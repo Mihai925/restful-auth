@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 module.exports =
-  (passport, LocalStrategy, User) => {
+  (passport, LocalStrategy, UserWrapper) => {
     passport.use(
         'login',
         new LocalStrategy(
@@ -12,7 +12,7 @@ module.exports =
           async (username, password, done) => {
             try {
 
-              const user = await User.get({"username": username});
+              const user = await UserWrapper.get(username);
               if(user === undefined) {
                 return done(null, false, {message: "Authentication failed"});
               }

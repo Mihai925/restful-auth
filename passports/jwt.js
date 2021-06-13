@@ -1,5 +1,5 @@
 module.exports =
-(ExtractJWT, JWTStrategy, JWTSecret, passport, User) => {
+(ExtractJWT, JWTStrategy, JWTSecret, passport, UserWrapper) => {
   const opts = {
     jwtFromRequest: ExtractJWT.fromAuthHeaderWithScheme('JWT'),
     secretOrKey: JWTSecret.secret
@@ -8,7 +8,7 @@ module.exports =
     'jwt',
     new JWTStrategy(opts, async (jwt_payload, done) => {
       try {
-        const user = await User.get(jwt_payload.id);
+        const user = await UserWrapper.get(jwt_payload.id);
         if(user) {
          done(null, user);
          return;

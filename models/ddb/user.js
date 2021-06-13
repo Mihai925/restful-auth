@@ -1,4 +1,3 @@
-
 module.exports = (dynamoose) => {
 return dynamoose.model("User",
     {

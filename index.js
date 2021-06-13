@@ -13,15 +13,16 @@ module.exports = (app, config) => {
   JWTStrategy = require('passport-jwt').Strategy,
   ExtractJWT = require('passport-jwt').ExtractJwt,
   User = require('./models/ddb/user')(config.db);
+  UserWrapper = require('./models/user-wrapper')(User, 'dynamoose');
   JWTSecret = require('./config/jwtConfig');
   jwt = require('jsonwebtoken');
 
   app.use(passport.initialize());
 
   //Create passports
-  require('./passports/jwt')(ExtractJWT, JWTStrategy, JWTSecret, passport, User);
-  require('./passports/register')(passport, LocalStrategy, User);
-  require('./passports/login')(passport, LocalStrategy, User);
+  require('./passports/jwt')(ExtractJWT, JWTStrategy, JWTSecret, passport, UserWrapper);
+  require('./passports/register')(passport, LocalStrategy, UserWrapper);
+  require('./passports/login')(passport, LocalStrategy, UserWrapper);
 
   //Create routes
   require('./api/register')(app, passport);

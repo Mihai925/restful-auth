@@ -2,7 +2,7 @@ const BCRYPT_SALT_ROUNDS = 5;
 const bcrypt = require("bcrypt");
 
 module.exports =
-  (passport, LocalStrategy, User) => {
+  (passport, LocalStrategy, UserWrapper) => {
     passport.use(
       'register',
       new LocalStrategy(
@@ -13,7 +13,7 @@ module.exports =
         },
         async (req, username, password, done) => {
           try {
-            const userNameMatch = await User.get({"username": username});
+            const userNameMatch = await UserWrapper.get(username);
             if(userNameMatch != undefined) {
               return done(null, false, {message: 'username and/or email already exists'});
             }
@@ -24,12 +24,12 @@ module.exports =
             }
 
             bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(async (hashedPassword) => {
-                const newUser = new User({
+                const userData = {
                   "username": username,
                   "password": hashedPassword,
                   "group": userGroup
-                });
-                await newUser.save();
+                };
+                const newUser = await UserWrapper.create(userData);
                 return done(null, newUser);
               }
             );
