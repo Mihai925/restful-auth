@@ -2,10 +2,9 @@ module.exports = (app, passport) => {
   app.post("/api/register", (req, res, next) => {
     passport.authenticate("register", (err, user, info) => {
       if(err) {
-        console.log(err);
+        throw new Error(err);
       }
       if(typeof info !== "undefined") {
-        console.log(info.message);
         res.status(500).send(info.message);
         return;
       }
