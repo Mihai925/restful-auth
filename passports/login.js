@@ -2,17 +2,17 @@ const bcrypt = require("bcrypt");
 module.exports =
   (passport, LocalStrategy, UserWrapper) => {
     passport.use(
-        'login',
+        "login",
         new LocalStrategy(
           {
-            usernameField: 'username',
-            passwordField: 'password',
+            usernameField: "username",
+            passwordField: "password",
             session: false,
           },
           async (username, password, done) => {
             try {
               const user = await UserWrapper.get(username);
-              if(user == undefined) {
+              if(typeof user === "undefined") {
                 return done(null, false, {message: "Authentication failed"});
               }
               const passwordMatch = bcrypt.compareSync(password, user.password);

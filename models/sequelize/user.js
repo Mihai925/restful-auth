@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
 		indexes: [
 			{
 				unique: false,
-				fields: ['group']
+				fields: ["group"]
 			}
 		]
 	});

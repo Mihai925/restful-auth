@@ -1,11 +1,11 @@
 module.exports =
   (app, passport, JWTSecret, UserWrapper, jwt) => {
-    app.post('/api/login', (req, res, next) => {
-      passport.authenticate('login', (err, user, info) => {
-        if(err != undefined) {
-          console.log(err);
+    app.post("/api/login", (req, res, next) => {
+      passport.authenticate("login", (err, user, info) => {
+        if(err !== null) {
+          throw new Error(err);
         }
-        if(info != undefined) {
+        if(typeof info !== "undefined") {
           res.send({
             auth: false
           });
@@ -15,7 +15,7 @@ module.exports =
             const token = jwt.sign({ id: loginUser.username}, JWTSecret.secret);
             res.status(200).send({
               auth: true,
-              token: token,
+              token,
               group: loginUser.group
             });
           });
