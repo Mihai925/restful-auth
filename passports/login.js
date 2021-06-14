@@ -11,9 +11,8 @@ module.exports =
           },
           async (username, password, done) => {
             try {
-
               const user = await UserWrapper.get(username);
-              if(user === undefined) {
+              if(user == undefined) {
                 return done(null, false, {message: "Authentication failed"});
               }
               const passwordMatch = bcrypt.compareSync(password, user.password);

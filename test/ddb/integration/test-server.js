@@ -7,7 +7,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Integration', function() {
-    describe('DDB+Express', function(){
+    describe('Dynamoose+Express', function(){
       var DdbLocalServer;
       var dynamoose;
       var restfulAuth;
@@ -27,7 +27,7 @@ describe('Integration', function() {
 
 
         restfulAuth(app, {
-          dialect: 'dynamodb',
+          type: 'dynamoose',
           db: dynamoose
         });
       });

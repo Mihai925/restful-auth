@@ -27,7 +27,9 @@
     "dynamodb-local": "0.0.31",
     "dynamoose": "^2.7.3",
     "express": "^4.17.1",
-    "mocha": "^7.1.2"
+    "mocha": "^7.1.2",
+    "sequelize": "^6.6.2",
+    "sqlite3": "^5.0.2"
   },
   "dependencies": {
     "bcrypt": ">=5.0.0",

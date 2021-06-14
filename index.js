@@ -1,19 +1,26 @@
 
 module.exports = (app, config) => {
-  if(config.dialect != 'dynamodb') {
-    throw new Error('Your database dialect is not supported');
+  if (!['dynamoose', 'sequelize'].includes(config.type)) {
+    throw new Error('Database library type is not supported: ' + config.type);
   }
   const db = config.db;
 
-  if(typeof db != 'object' || !db.aws) {
+  if (config.type === 'dynamoose' && (typeof db != 'object' || !db.aws)) {
     throw new Error('Please provide a valid dynamoose instance');
+  }
+
+  if (config.type === 'sequelize' && (typeof db != 'object' || !db.getQueryInterface)) {
+    throw new Error('Please provide a valid sequelize instance');
   }
   const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   JWTStrategy = require('passport-jwt').Strategy,
   ExtractJWT = require('passport-jwt').ExtractJwt,
-  User = require('./models/ddb/user')(config.db);
-  UserWrapper = require('./models/user-wrapper')(User, 'dynamoose');
+  User = require('./models/' + config.type + '/user')(config.db);
+  if(config.type === 'sequelize' && process.env.RA_SYNC_SQL === "true") {
+    User.sync();
+  }
+  UserWrapper = require('./models/user-wrapper')(User, config.type);
   JWTSecret = require('./config/jwtConfig');
   jwt = require('jsonwebtoken');
 
@@ -26,6 +33,6 @@ module.exports = (app, config) => {
 
   //Create routes
   require('./api/register')(app, passport);
-  require('./api/login')(app, passport, JWTSecret, User, jwt);
+  require('./api/login')(app, passport, JWTSecret, UserWrapper, jwt);
 
 };
