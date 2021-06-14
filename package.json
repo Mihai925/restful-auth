@@ -4,7 +4,7 @@
   "description": "A database-agnostic, bring your own frontend user management API",
   "main": "index.js",
   "scripts": {
-    "test": "env AWS_ACCESS_KEY_ID=a AWS_SECRET_ACCESS_KEY=b AWS_REGION=\"us-east-1\" RA_SYNC_SQL=\"true\" mocha test/*/*"
+    "test": "env AWS_ACCESS_KEY_ID=a AWS_SECRET_ACCESS_KEY=b AWS_REGION=\"us-east-1\" RA_SYNC_SQL=\"true\" nyc --reporter=html --reporter=text mocha test/*/*"
   },
   "repository": {
     "type": "git",
