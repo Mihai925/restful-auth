@@ -86,4 +86,28 @@ describe("Integration", function() {
 
         shared(chai, appWrapper, expect);
     });
+    describe("sequelize/postgresql", function(){
+        var express;
+        var appWrapper = {};
+        var sequelize;
+        beforeEach( async () => {
+            express = require("express");
+            appWrapper.app = express();
+            appWrapper.app.use(bodyParser.json());
+            sequelize = new Sequelize('test', 'postgres', '' , {
+                host: 'localhost',
+                dialect: 'postgres',
+                logging: false
+            });
+            const restfulAuth = require("../index.js");
+
+            restfulAuth(appWrapper.app, {
+                type: "sequelize",
+                db: sequelize
+            });
+            await sequelize.sync({force: true});
+        });
+
+        shared(chai, appWrapper, expect);
+    });
 });
