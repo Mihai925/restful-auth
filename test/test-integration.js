@@ -61,4 +61,26 @@ describe("Integration", function() {
 
         shared(chai, appWrapper, expect);
     });
+    describe("sequelize/mysql", function(){
+        var express;
+        var appWrapper = {};
+        var sequelize;
+        beforeEach( async () => {
+            express = require("express");
+            appWrapper.app = express();
+            appWrapper.app.use(bodyParser.json());
+            sequelize = new Sequelize('test', 'travis', '' , {
+                host: 'localhost',
+                dialect: 'mysql'
+            });
+            const restfulAuth = require("../index.js");
+
+            restfulAuth(appWrapper.app, {
+                type: "sequelize",
+                db: sequelize
+            });
+        });
+
+        shared(chai, appWrapper, expect);
+    });
 });
