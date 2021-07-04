@@ -9,7 +9,8 @@
     "test-integ-sqlite": "nyc --reporter=html --reporter=text mocha test/test-integ-sqlite.js",
     "test-integ-mysql": "nyc --reporter=html --reporter=text mocha test/test-integ-mysql.js",
     "test-integ-psql": "nyc --reporter=html --reporter=text mocha test/test-integ-psql.js",
-    "test-integ-mssql": "nyc --reporter=html --reporter=text mocha test/test-integ-mssql.js",
+    "test-integ-mssql": "nyc --reporter=html --reporter=text mocha test/test-integ-mssql.js --timeout 10000",
+    "test-integ-mariadb": "nyc --reporter=html --reporter=text mocha test/test-integ-mariadb.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -34,6 +35,7 @@
     "dynamodb-local": "0.0.31",
     "dynamoose": "^2.7.3",
     "express": "^4.17.1",
+    "mariadb": "^2.5.4",
     "mocha": "^7.2.0",
     "mocha-lcov-reporter": "^1.3.0",
     "msnodesqlv8": "^2.2.0",

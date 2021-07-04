@@ -9,18 +9,28 @@ jobs:
     - script: npm run test-integ-sqlite
 
     - services: mysql
-      before_install: mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+      before_script: mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
       script: npm run test-integ-mysql
 
     - services: postgresql
-      before_install: psql -c 'create database test;' -U postgres
+      before_script: psql -c 'create database test;' -U postgres
       script: npm run test-integ-psql
 
-    - before_install:
+    - before_script:
       - sudo bash -c 'curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -'
       - sudo bash -c 'curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list'
       - sudo apt-get update
       - sudo ACCEPT_EULA=Y apt-get install msodbcsql17
       script: npm run test-integ-mssql
+
+    - addons:
+        mariadb: '10.5'
+      before_script:
+       - sudo mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+       - sudo mysql -e 'drop user if exists travis@localhost;'
+       - sudo mysql -e 'create user travis@localhost;'
+       - sudo mysql -e "GRANT ALL PRIVILEGES ON db.* TO 'travis'@'localhost'";
+       - sudo mysql -e "GRANT ALL ON *.* to travis@localhost;";
+      script: npm run test-integ-mariadb
 
 after_success: npm run coverage
