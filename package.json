@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "env AWS_ACCESS_KEY_ID=a AWS_SECRET_ACCESS_KEY=b AWS_REGION=\"us-east-1\" RA_SYNC_SQL=\"true\" nyc --reporter=html --reporter=text mocha test/* --timeout 10000",
+    "test-integ-ddb": "env AWS_ACCESS_KEY_ID=a AWS_SECRET_ACCESS_KEY=b AWS_REGION=\"us-east-1\" nyc --reporter=html --reporter=text mocha test/test-integ-ddb.js --timeout 10000",
+    "test-integ-sqlite": "nyc --reporter=html --reporter=text mocha test/test-integ-sqlite.js",
+    "test-integ-mysql": "nyc --reporter=html --reporter=text mocha test/test-integ-mysql.js",
+    "test-integ-psql": "nyc --reporter=html --reporter=text mocha test/test-integ-psql.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
