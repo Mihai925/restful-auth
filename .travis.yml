@@ -16,4 +16,11 @@ jobs:
       before_install: psql -c 'create database test;' -U postgres
       script: npm run test-integ-psql
 
+    - before_install:
+      - sudo bash -c 'curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -'
+      - sudo bash -c 'curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list'
+      - sudo apt-get update
+      - sudo ACCEPT_EULA=Y apt-get install msodbcsql17
+      script: npm run test-integ-mssql
+
 after_success: npm run coverage
