@@ -9,11 +9,21 @@ jobs:
     - script: npm run test-integ-sqlite
 
     - services: mysql
-      before_install: mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+      before_script: mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
       script: npm run test-integ-mysql
 
     - services: postgresql
-      before_install: psql -c 'create database test;' -U postgres
+      before_script: psql -c 'create database test;' -U postgres
       script: npm run test-integ-psql
+
+    - addons:
+        mariadb: '10.5'
+      before_script:
+       - sudo mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+       - sudo mysql -e 'drop user if exists travis@localhost;'
+       - sudo mysql -e 'create user travis@localhost;'
+       - sudo mysql -e "GRANT ALL PRIVILEGES ON db.* TO 'travis'@'localhost'";
+       - sudo mysql -e "GRANT ALL ON *.* to travis@localhost;";
+      script: npm run test-integ-mariadb
 
 after_success: npm run coverage
