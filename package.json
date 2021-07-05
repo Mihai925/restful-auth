@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/Mihai925/restful-auth#readme",
   "peerDependencies": {
-    "dynamoose": "^2.1.0"
+    "dynamoose": "^2.1.0",
+    "sequelize": "^6.1.0",
   },
   "devDependencies": {
     "aws-sdk": "^2.678.0",
