@@ -15,7 +15,7 @@ module.exports =
           try {
             const userNameMatch = await UserWrapper.get(username);
             if(typeof userNameMatch !== "undefined") {
-              return done(null, false, {message: 'username and/or email already exists'});
+              return done(null, false, {code: 409, message: 'username and/or email already exists'});
             }
 
             var group = req.body.group;

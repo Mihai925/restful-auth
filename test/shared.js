@@ -33,6 +33,23 @@ module.exports = (chai, appWrapper, expect) => {
         expect(loginResponse.body).to.have.property("auth").eql(false);
     });
 
+    it("should not register a user twice", async () => {
+        const regResponse = await chai.request(appWrapper.app)
+            .post("/api/register")
+            .send({"username":"john", "password":"pwd12345"})
+            .catch(function (err) {
+                throw new Error(err);
+            });
+        const secondReg = await chai.request(appWrapper.app)
+            .post("/api/register")
+            .send({"username":"john", "password":"pwd123"})
+            .catch(function (err) {
+                throw new Error(err);
+            });
+        expect(regResponse).to.have.status(200);
+        expect(secondReg).to.have.status(409);
+    });
+
     it("should not login a user with wrong password", async () => {
         const regResponse = await chai.request(appWrapper.app)
             .post("/api/register")

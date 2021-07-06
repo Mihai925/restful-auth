@@ -24,7 +24,6 @@ module.exports = (app, config) => {
   app.use(passport.initialize());
 
   //Create passports
-  require("./passports/jwt")(ExtractJWT, JWTStrategy, JWTSecret, passport, UserWrapper);
   require("./passports/register")(passport, LocalStrategy, UserWrapper);
   require("./passports/login")(passport, LocalStrategy, UserWrapper);
 

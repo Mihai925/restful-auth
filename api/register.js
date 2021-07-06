@@ -4,10 +4,13 @@ module.exports = (app, passport) => {
       if(err) {
         throw new Error(err);
       }
+
       if(typeof info !== "undefined") {
-        res.status(500).send(info.message);
+        res.status(info.code).send(info.message);
         return;
       }
+      //console.log(info.message);
+
       res.status(200).send({message:"User created" });
     })(req, res, next);
   });
