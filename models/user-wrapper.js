@@ -15,16 +15,23 @@ module.exports = (User, TYPE) => {
                 }
                 return user;
             }
+            if (this.TYPE === "mongoose") {
+                var user = await this.User.findOne({username}).exec();
+                if(user === null) {
+                    user = undefined;
+                }
+                return user;
+            }
             throw "Undefined database type";
         }
 
         async create(data) {
-            if (this.TYPE === "dynamoose") {
+            if (this.TYPE === "dynamoose" || this.TYPE === "mongoose") {
                 const newUser = new this.User(data);
                 return await newUser.save();
             }
             if (this.TYPE === "sequelize") {
-                return this.User.create(data);
+                return await this.User.create(data);
             }
             throw "Undefined database type";
         }

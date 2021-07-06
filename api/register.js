@@ -9,7 +9,6 @@ module.exports = (app, passport) => {
         res.status(info.code).send(info.message);
         return;
       }
-      //console.log(info.message);
 
       res.status(200).send({message:"User created" });
     })(req, res, next);

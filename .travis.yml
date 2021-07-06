@@ -26,4 +26,8 @@ jobs:
        - sudo mysql -e "GRANT ALL ON *.* to travis@localhost;";
       script: npm run test-integ-mariadb
 
+    - services: mongodb
+      before_script:
+        - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+      script: npm run test-integ-mongodb
 after_success: npm run coverage
