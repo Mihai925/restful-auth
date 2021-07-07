@@ -18,13 +18,11 @@ module.exports = (app, config) => {
 
   const passport = require("passport");
   const LocalStrategy = require("passport-local").Strategy;
-  const JWTStrategy = require("passport-jwt").Strategy;
-  const ExtractJWT = require("passport-jwt").ExtractJwt;
   const User = require("./models/" + config.type + "/user")(db);
 
   const UserWrapper = require("./models/user-wrapper")(User, config.type);
   const JWTSecret = require("./config/jwtConfig");
-  jwt = require("jsonwebtoken");
+  const jwt = require("jsonwebtoken");
 
   app.use(passport.initialize());
 
