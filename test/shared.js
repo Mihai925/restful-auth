@@ -1,20 +1,19 @@
 module.exports = (chai, appWrapper, expect) => {
     it("should register and login a user", async () => {
-        //console.log("App: " + appWrapper);
-        //console.log("Chai: " + chai);
         const regResponse = await chai.request(appWrapper.app)
             .post("/api/register")
             .send({"username":"john", "password":"pwd12345"})
             .catch(function (err) {
                 throw new Error(err);
             });
+        expect(regResponse).to.have.status(200);
+
         const loginResponse = await chai.request(appWrapper.app)
             .post("/api/login")
             .send({"username":"john", "password":"pwd12345"})
             .catch(function (err) {
                 throw new Error(err);
             });
-        expect(regResponse).to.have.status(200);
         expect(loginResponse).to.have.status(200);
         expect(loginResponse.body).to.have.property("token");
         expect(loginResponse.body).to.have.property("auth").eql(true);

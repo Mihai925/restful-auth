@@ -1,5 +1,5 @@
 module.exports = (app, config) => {
-  if (!["dynamoose", "sequelize"].includes(config.type)) {
+  if (!["dynamoose", "sequelize", "mongoose"].includes(config.type)) {
     throw new Error("Database library type is not supported: " + config.type);
   }
   const db = config.db;
@@ -11,11 +11,16 @@ module.exports = (app, config) => {
   if (config.type === "sequelize" && (typeof db != "object" || !db.getQueryInterface)) {
     throw new Error('Please provide a valid sequelize instance');
   }
+
+  if (config.type === "mongoose" && (typeof db != "object" || !db.mongo)) {
+    throw new Error('Please provide a valid mongoose instance');
+  }
+
   const passport = require("passport");
   const LocalStrategy = require("passport-local").Strategy;
   const JWTStrategy = require("passport-jwt").Strategy;
   const ExtractJWT = require("passport-jwt").ExtractJwt;
-  const User = require("./models/" + config.type + "/user")(config.db);
+  const User = require("./models/" + config.type + "/user")(db);
 
   const UserWrapper = require("./models/user-wrapper")(User, config.type);
   const JWTSecret = require("./config/jwtConfig");
