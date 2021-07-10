@@ -20,7 +20,7 @@ describe("sequelize/mysql", function(){
             dialect: 'mysql',
             logging: false
         });
-        const restfulAuth = require("../index.js");
+        const restfulAuth = require("../../index.js");
 
         restfulAuth(appWrapper.app, {
             type: "sequelize",

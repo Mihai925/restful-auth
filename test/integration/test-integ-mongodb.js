@@ -17,7 +17,7 @@ describe("mongoose/mongodb", function(){
         appWrapper.app.use(bodyParser.json());
         mongoose = require("mongoose");
         delete mongoose.connection.models["User"];
-        const restfulAuth = require("../index.js");
+        const restfulAuth = require("../../index.js");
         await mongoose.connect("mongodb://travis:test@localhost:27017/mydb_test", 
             {
                 useNewUrlParser: true,
