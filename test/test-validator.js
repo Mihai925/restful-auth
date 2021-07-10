@@ -36,4 +36,8 @@ describe("validator", () =>{
     it("should error out for an invalid sequelize", () => {
         expect(() => validator.validate("sequelize", {})).to.throw();
     });    
+
+    it("should error out for a non-supported library", () => {
+        expect(() => validator.validate("non-supported", {})).to.throw();
+    }); 
 });
