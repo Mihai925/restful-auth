@@ -17,7 +17,7 @@ describe("dynamoose/dynamodb", function(){
     beforeEach(async () => {
         DdbLocalServer = require("dynamodb-local");
         dynamoose = require("dynamoose");
-        restfulAuth = require("../index.js");
+        restfulAuth = require("../../index.js");
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());

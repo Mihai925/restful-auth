@@ -7,7 +7,7 @@ const shared = require("./shared.js");
 
 chai.use(chaiHttp);
 
-describe("sequelize/mariadb", function(){
+describe("sequelize/sqlite", function(){
     var express;
     var appWrapper = {};
     var sequelize;
@@ -15,12 +15,8 @@ describe("sequelize/mariadb", function(){
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
-        sequelize = new Sequelize('test', 'travis', '' , {
-            host: 'localhost',
-            dialect: 'mariadb',
-            logging: false
-        });
-        const restfulAuth = require("../index.js");
+        sequelize = new Sequelize("sqlite::memory:", { logging: false});
+        const restfulAuth = require("../../index.js");
 
         restfulAuth(appWrapper.app, {
             type: "sequelize",

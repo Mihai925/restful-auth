@@ -4,6 +4,8 @@ node_js:
 
 jobs:
   include:
+    - script: npm test
+
     - script: npm run test-integ-ddb
 
     - script: npm run test-integ-sqlite
