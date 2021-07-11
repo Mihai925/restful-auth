@@ -1,5 +1,5 @@
-module.exports = (app, passport) => {
-  app.post("/api/register", (req, res, next) => {
+module.exports = (app, rateLimiter, passport) => {
+  app.post("/api/register", rateLimiter, (req, res, next) => {
     passport.authenticate("register", (err, user, info) => {
       if(err) {
         throw new Error(err);

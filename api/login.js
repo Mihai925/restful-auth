@@ -1,6 +1,6 @@
 module.exports =
-  (app, passport, JWTSecret, UserWrapper, jwt) => {
-    app.post("/api/login", (req, res, next) => {
+  (app, rateLimiter, passport, JWTSecret, UserWrapper, jwt) => {
+    app.post("/api/login", rateLimiter, (req, res, next) => {
       passport.authenticate("login", (err, user, info) => {
         if(err !== null) {
           throw new Error(err);
