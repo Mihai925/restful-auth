@@ -6,15 +6,22 @@ module.exports = (config) => {
             });
     return {
         getRegisterRateLimiter: () => {
-            if(config.ratelimiter && config.rateLimiter.register) {
-                return config.ratelimiter.register;
+            if(config.rateLimiter && config.rateLimiter.register) {
+                return config.rateLimiter.register;
             }
             return defaultRateLimiter;
         },
 
         getLoginRateLimiter: () => {
-            if(config.ratelimiter && config.rateLimiter.login) {
-                return config.ratelimiter.login;
+            if(config.rateLimiter && config.rateLimiter.login) {
+                return config.rateLimiter.login;
+            }
+            return defaultRateLimiter;
+        },
+
+        getLogoutRateLimiter: () => {
+            if(config.rateLimiter && config.rateLimiter.logout) {
+                return config.rateLimiter.logout;
             }
             return defaultRateLimiter;
         }

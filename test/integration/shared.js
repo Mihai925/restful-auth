@@ -1,5 +1,5 @@
 module.exports = (chai, appWrapper, expect) => {
-    it("should register and login a user", async () => {
+    it("should register, login and logout user", async () => {
         const regResponse = await chai.request(appWrapper.app)
             .post("/api/register")
             .send({"username":"john", "password":"pwd12345"})
@@ -18,6 +18,13 @@ module.exports = (chai, appWrapper, expect) => {
         expect(loginResponse.body).to.have.property("token");
         expect(loginResponse.body).to.have.property("auth").eql(true);
         expect(loginResponse.body).to.have.property("group").eql("standard");
+        const logoutResponse = await chai.request(appWrapper.app)
+            .post("/api/logout")
+            .redirects(0)
+            .catch(function (err) {
+                throw new Error(err);
+            });
+        expect(logoutResponse).to.have.status(302);
     });
         
     it("should not login a user that is not registered", async () => {

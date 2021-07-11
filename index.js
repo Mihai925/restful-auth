@@ -13,6 +13,7 @@ module.exports = (app, config) => {
   const rateLimiter = require("./rate-limiter")(config);
   const registerRateLimiter = rateLimiter.getRegisterRateLimiter();
   const loginRateLimiter = rateLimiter.getLoginRateLimiter();
+  const logoutRateLimiter = rateLimiter.getLogoutRateLimiter();
 
   app.use(passport.initialize());
 
@@ -23,5 +24,6 @@ module.exports = (app, config) => {
   //Create routes
   require("./api/register")(app, registerRateLimiter, passport);
   require("./api/login")(app, loginRateLimiter, passport, JWTSecret, UserWrapper, jwt);
+  require("./api/logout")(app, logoutRateLimiter);
 
 };
