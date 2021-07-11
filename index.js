@@ -10,6 +10,10 @@ module.exports = (app, config) => {
   const JWTSecret = require("./config/jwtConfig");
   const jwt = require("jsonwebtoken");
 
+  const rateLimiter = require("./rate-limiter")(config);
+  const registerRateLimiter = rateLimiter.getRegisterRateLimiter();
+  const loginRateLimiter = rateLimiter.getLoginRateLimiter();
+
   app.use(passport.initialize());
 
   //Create passports
@@ -17,7 +21,7 @@ module.exports = (app, config) => {
   require("./passports/login")(passport, LocalStrategy, UserWrapper);
 
   //Create routes
-  require("./api/register")(app, passport);
-  require("./api/login")(app, passport, JWTSecret, UserWrapper, jwt);
+  require("./api/register")(app, registerRateLimiter, passport);
+  require("./api/login")(app, loginRateLimiter, passport, JWTSecret, UserWrapper, jwt);
 
 };

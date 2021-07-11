@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-describe("validator", () =>{
+describe("validator", () => {
 
     const validator = require("../validator")();
 
