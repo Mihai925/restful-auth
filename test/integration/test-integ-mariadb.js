@@ -10,6 +10,7 @@ chai.use(chaiHttp);
 describe("sequelize/mariadb", function(){
     var express;
     var appWrapper = {};
+    var restfulAuthWrapper = {};
     var sequelize;
     beforeEach(async () => {
         express = require("express");
@@ -22,12 +23,13 @@ describe("sequelize/mariadb", function(){
         });
         const restfulAuth = require("../../index.js");
 
-        restfulAuth(appWrapper.app, {
-            type: "sequelize",
-            db: sequelize
-        });
+        restfulAuthWrapper.app =
+            restfulAuth(appWrapper.app, {
+                type: "sequelize",
+                db: sequelize
+            });
         await sequelize.sync({force: true});
     });
 
-    shared(chai, appWrapper, expect);
+    shared(chai, appWrapper, restfulAuthWrapper, expect);
 });

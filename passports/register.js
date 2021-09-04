@@ -7,27 +7,27 @@ module.exports =
       "register",
       new LocalStrategy(
         {
-          usernameField: "username",
+          usernameField: "id",
           passwordField: "password",
           passReqToCallback: true
         },
-        async (req, username, password, done) => {
+        async (req, id, password, done) => {
           try {
-            const userNameMatch = await UserWrapper.get(username);
-            if(typeof userNameMatch !== "undefined") {
-              return done(null, false, {code: 409, message: 'username and/or email already exists'});
+            const idMatch = await UserWrapper.get({id});
+            if(typeof idMatch !== "undefined") {
+              return done(null, false, {code: 409, message: 'id and/or email already exists'});
             }
 
-            var group = req.body.group;
-            if(typeof group === "undefined") {
-              group = "standard";
+            var role = req.body.role;
+            if(typeof role === "undefined") {
+              role = "standard";
             }
 
             bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(async (hashedPassword) => {
                 const userData = {
-                  username,
+                  id,
                   "password": hashedPassword,
-                  group
+                  role
                 };
                 const newUser = await UserWrapper.create(userData);
                 return done(null, newUser);

@@ -9,6 +9,7 @@ chai.use(chaiHttp);
 describe("mongoose/mongodb", function(){
     var express;
     var appWrapper = {};
+    var restfulAuthWrapper = {};
     var mongoose;
     var sequelize;
     beforeEach(async () => {
@@ -17,6 +18,7 @@ describe("mongoose/mongodb", function(){
         appWrapper.app.use(bodyParser.json());
         mongoose = require("mongoose");
         delete mongoose.connection.models["User"];
+        delete mongoose.connection.models["ResetToken"];
         const restfulAuth = require("../../index.js");
         await mongoose.connect("mongodb://travis:test@localhost:27017/mydb_test", 
             {
@@ -25,19 +27,19 @@ describe("mongoose/mongodb", function(){
                 useCreateIndex: true
             });
         
-
-        restfulAuth(appWrapper.app, {
-            type: "mongoose",
-            db: mongoose
-        });
+        var collections = await mongoose.connection.db.listCollections().toArray();
+        for (var i = 0; i < collections.length; i++) {
+            await mongoose.connection.db.dropCollection(collections[i].name);
+        }
+        restfulAuthWrapper.app = 
+            restfulAuth(appWrapper.app, {
+                type: "mongoose",
+                db: mongoose
+            });
     });
 
     afterEach(async () => {
-        var collections = await mongoose.connection.db.listCollections().toArray();
-        if(collections.length > 0) {
-            await mongoose.connection.db.dropCollection("users");
-        }
         mongoose.connection.close();
     });
-    shared(chai, appWrapper, expect);
+    shared(chai, appWrapper, restfulAuthWrapper, expect);
 });

@@ -11,12 +11,12 @@ module.exports =
           });
         } else {
           req.logIn(user, async (err) => {
-            const loginUser = await UserWrapper.get(user.username);
-            const token = jwt.sign({ id: loginUser.username}, JWTSecret.secret);
+            const loginUser = await UserWrapper.get({id: user.id});
+            const token = jwt.sign({ id: loginUser.id}, JWTSecret.secret);
             res.status(200).send({
               auth: true,
               token,
-              group: loginUser.group
+              role: loginUser.role
             });
           });
         }

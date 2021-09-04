@@ -10,6 +10,7 @@ chai.use(chaiHttp);
 describe("sequelize/sqlite", function(){
     var express;
     var appWrapper = {};
+    var restfulAuthWrapper = {};
     var sequelize;
     beforeEach(async () => {
         express = require("express");
@@ -18,12 +19,13 @@ describe("sequelize/sqlite", function(){
         sequelize = new Sequelize("sqlite::memory:", { logging: false});
         const restfulAuth = require("../../index.js");
 
-        restfulAuth(appWrapper.app, {
-            type: "sequelize",
-            db: sequelize
-        });
+        restfulAuthWrapper.app = 
+            restfulAuth(appWrapper.app, {
+                type: "sequelize",
+                db: sequelize
+            });
         await sequelize.sync({force: true});
     });
 
-    shared(chai, appWrapper, expect);
+    shared(chai, appWrapper, restfulAuthWrapper, expect);
 });

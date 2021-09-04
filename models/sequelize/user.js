@@ -1,7 +1,7 @@
 //Note: Not using DataType since we don't wanna make the user inject that too. We'll just go with "VARCHAR(255)"
 module.exports = (sequelize) => {
 	return sequelize.define("User", {
-		username: {
+		id: {
 			type: "VARCHAR(255)",
 			allowNull: false,
 			primaryKey: true
@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
 			type: "VARCHAR(255)",
 			allowNull: false
 		},
-		group: {
+		role: {
 			type: "VARCHAR(255)",
 		}
 	},
@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
 		indexes: [
 			{
 				unique: false,
-				fields: ["group"]
+				fields: ["role"]
 			}
 		]
 	});

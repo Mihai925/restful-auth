@@ -13,6 +13,7 @@ describe("dynamoose/dynamodb", function(){
     var restfulAuth;
     var express;
     var appWrapper = {};
+    var restfulAuthWrapper = {};
     var ddbInstance;
     beforeEach(async () => {
         DdbLocalServer = require("dynamodb-local");
@@ -25,14 +26,15 @@ describe("dynamoose/dynamodb", function(){
         ddbInstance = await new DdbLocalServer.launch("3456", null, ["-sharedDb"], true, true);
         dynamoose.aws.ddb.local("http://localhost:3456");
 
-        restfulAuth(appWrapper.app, {
-            type: "dynamoose",
-            db: dynamoose
-        });
+        restfulAuthWrapper.app = 
+            restfulAuth(appWrapper.app, {
+                type: "dynamoose",
+                db: dynamoose
+            });
     });
     afterEach(async () => {
         await DdbLocalServer.stop("3456");
     });
 
-    shared(chai, appWrapper, expect);
+    shared(chai, appWrapper, restfulAuthWrapper, expect);
 });
