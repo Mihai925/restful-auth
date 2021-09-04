@@ -49,29 +49,17 @@ module.exports = () => {
         "mongoose": async (pk, data, Model) => {
             toggleObjectId(pk);
             const record = await Model.findOne(pk);
-            for (var key in data) {
-                if ({}.hasOwnProperty.call(data, key)) {
-                    record[key] = data[key];
-                }
-            }
+            Object.assign(record, data);
             return await record.save();
         },
         "dynamoose": async (pk, data, Model) => {
             const record = await Model.get(pk);
-            for (var key in data) {
-                if ({}.hasOwnProperty.call(data, key)) {
-                    record[key] = data[key];
-                }
-            }
+            Object.assign(record, data);
             return await record.save();
         },
         "sequelize": async (pk, data, Model) => {
             const record = await Model.findOne(pk);
-            for (var key in data) {
-                if ({}.hasOwnProperty.call(data, key)) {
-                    record[key] = data[key];
-                }
-            }
+            Object.assign(record, data);
             return await record.save();
         }
     };
