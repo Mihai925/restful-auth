@@ -5,8 +5,11 @@ module.exports = (app, config) => {
   const passport = require("passport");
   const LocalStrategy = require("passport-local").Strategy;
   const User = require("./models/" + config.type + "/user")(config.db);
+  const ResetToken = require("./models/" + config.type + "/resetToken")(config.db, User);
 
-  const UserWrapper = require("./models/user-wrapper")(User, config.type);
+  const UserWrapper = require("./models/userWrapper")(User, config.type);
+  const TokenWrapper = require("./models/resetTokenWrapper")(ResetToken, config.type);
+  const TokenCreationHelper = require("./helpers/tokenCreationHelper")(UserWrapper, TokenWrapper, config.type);
   const JWTSecret = require("./config/jwtConfig");
   const jwt = require("jsonwebtoken");
 
@@ -14,6 +17,7 @@ module.exports = (app, config) => {
   const registerRateLimiter = rateLimiter.getRegisterRateLimiter();
   const loginRateLimiter = rateLimiter.getLoginRateLimiter();
   const logoutRateLimiter = rateLimiter.getLogoutRateLimiter();
+  const resetTokenRateLimiter = rateLimiter.getLogoutRateLimiter();
 
   app.use(passport.initialize());
 
@@ -25,5 +29,8 @@ module.exports = (app, config) => {
   require("./api/register")(app, registerRateLimiter, passport);
   require("./api/login")(app, loginRateLimiter, passport, JWTSecret, UserWrapper, jwt);
   require("./api/logout")(app, logoutRateLimiter);
-
+  require("./api/reset")(app, resetTokenRateLimiter, TokenWrapper, UserWrapper);
+  return {
+    creteResetToken: TokenCreationHelper.createResetToken
+  };
 };

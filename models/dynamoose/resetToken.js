@@ -1,18 +1,17 @@
 module.exports = (dynamoose) => {
-return dynamoose.model("User",
+return dynamoose.model("ResetToken",
     {
-      "id": {
+      "token": {
         "hashKey": true,
         "type": String,
         "required": true
       },
-      "password": {
+      "userId": {
         "type": String,
         "required": true
       },
-      "role": {
-        "type": String,
-        "required": false
+      "expiry": {
+        "type": Number
       }
     }
   );

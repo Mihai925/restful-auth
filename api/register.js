@@ -4,12 +4,9 @@ module.exports = (app, rateLimiter, passport) => {
       if(err) {
         throw new Error(err);
       }
-
       if(typeof info !== "undefined") {
         res.status(info.code).send(info.message);
-        return;
       }
-
       res.status(200).send({message:"User created" });
     })(req, res, next);
   });

@@ -5,13 +5,13 @@ module.exports =
         "login",
         new LocalStrategy(
           {
-            usernameField: "username",
+            usernameField: "id",
             passwordField: "password",
             session: false,
           },
-          async (username, password, done) => {
+          async (id, password, done) => {
             try {
-              const user = await UserWrapper.get(username);
+              const user = await UserWrapper.get({id});
               if(typeof user === "undefined" || user === null) {
                 return done(null, false, {message: "Authentication failed"});
               }
