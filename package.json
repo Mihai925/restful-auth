@@ -46,6 +46,7 @@
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5",
+    "sinon": "^11.1.2",
     "sqlite3": "^5.0.2"
   },
   "dependencies": {

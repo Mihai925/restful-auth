@@ -84,4 +84,4 @@ module.exports = () => {
         update: async (pk, data, TYPE, Model) => update[TYPE](pk, data, Model),
         delete: async (pk, TYPE, Model) => remove[TYPE](pk, Model)
     };
-}
+};

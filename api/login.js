@@ -12,11 +12,10 @@ module.exports =
         } else {
           req.logIn(user, async (err) => {
             const loginUser = await UserWrapper.get({id: user.id});
-            const token = jwt.sign({ id: loginUser.id}, JWTSecret.secret);
+            const token = jwt.sign({id: loginUser.id, role: loginUser.role}, JWTSecret.secret);
             res.status(200).send({
               auth: true,
-              token,
-              role: loginUser.role
+              token
             });
           });
         }

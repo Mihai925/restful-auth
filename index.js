@@ -10,6 +10,7 @@ module.exports = (app, config) => {
   const UserWrapper = require("./models/userWrapper")(User, config.type);
   const TokenWrapper = require("./models/resetTokenWrapper")(ResetToken, config.type);
   const TokenCreationHelper = require("./helpers/tokenCreationHelper")(UserWrapper, TokenWrapper, config.type);
+  const Middlewares = require("./helpers/middlewares");
   const JWTSecret = require("./config/jwtConfig");
   const jwt = require("jsonwebtoken");
 
@@ -31,6 +32,10 @@ module.exports = (app, config) => {
   require("./api/logout")(app, logoutRateLimiter);
   require("./api/reset")(app, resetTokenRateLimiter, TokenWrapper, UserWrapper);
   return {
-    creteResetToken: TokenCreationHelper.createResetToken
+    createResetToken: TokenCreationHelper.createResetToken,
+    middlewares: {
+      HasRole: Middlewares.role,
+      IsLoggedIn: Middlewares.login
+    }
   };
 };

@@ -1,4 +1,5 @@
 module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
+    const sinon  = require('sinon');
     it("should register, login and logout user", async () => {
         const regResponse = await chai.request(appWrapper.app)
             .post("/api/register")
@@ -17,7 +18,11 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
         expect(loginResponse).to.have.status(200);
         expect(loginResponse.body).to.have.property("token");
         expect(loginResponse.body).to.have.property("auth").eql(true);
-        expect(loginResponse.body).to.have.property("role").eql("standard");
+        const token = loginResponse.body.token;
+        const loginMiddleware = restfulAuthWrapper.app.middlewares.IsLoggedIn();
+        var nextSpy = sinon.spy();
+        loginMiddleware({token}, {}, nextSpy);
+        expect(nextSpy.calledOnce).to.be.true;
         const logoutResponse = await chai.request(appWrapper.app)
             .post("/api/logout")
             .redirects(0)
@@ -47,7 +52,7 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
                 throw new Error(err);
             });
         expect(regResponse).to.have.status(200);
-        const token = await restfulAuthWrapper.app.creteResetToken("john");
+        const token = await restfulAuthWrapper.app.createResetToken("john");
         const resetResponse = await chai.request(appWrapper.app)
             .post("/api/reset")
             .send({"id":"john", "password":"newpass", token})
@@ -79,7 +84,7 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
                 throw new Error(err);
             });
         expect(regResponse).to.have.status(200);
-        const token = await restfulAuthWrapper.app.creteResetToken("john", -24*60*60);
+        const token = await restfulAuthWrapper.app.createResetToken("john", -24*60*60);
         const resetResponse = await chai.request(appWrapper.app)
             .post("/api/reset")
             .send({"id":"john", "password":"newpass", "token":token})
@@ -90,7 +95,7 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
     });
 
     it("should not create tokens for non-existent users", async () => {        
-        const token = await restfulAuthWrapper.app.creteResetToken("john");
+        const token = await restfulAuthWrapper.app.createResetToken("john");
         expect(token).to.equal(undefined);
     });
 
@@ -142,8 +147,12 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
             .catch(function (err) {
                 throw new Error(err);
         });
+        const token = loginResponse.body.token;
+        const roleMiddleware = restfulAuthWrapper.app.middlewares.HasRole("customrole");
+        var nextSpy = sinon.spy();
+        roleMiddleware({token}, {}, nextSpy);
+        expect(nextSpy.calledOnce).to.be.true;
         expect(regResponse).to.have.status(200);
         expect(loginResponse).to.have.status(200);
-        expect(loginResponse.body).to.have.property("role").eql("customrole");
     }); 
 };
