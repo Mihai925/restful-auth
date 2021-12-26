@@ -16,7 +16,7 @@ describe("sequelize/mysql", function(){
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
-        sequelize = new Sequelize('test', 'test', 'test' , {
+        sequelize = new Sequelize('test', 'test', '' , {
             host: '127.0.0.1',
             dialect: 'mysql',
             logging: false,
