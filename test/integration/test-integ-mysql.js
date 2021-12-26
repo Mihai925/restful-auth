@@ -17,10 +17,10 @@ describe("sequelize/mysql", function(){
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
         sequelize = new Sequelize('test', 'test', 'test' , {
-            host: 'localhost',
+            host: 'mysql',
             dialect: 'mysql',
             logging: false,
-            port: 3307
+            port: 3800
         });
         const restfulAuth = require("../../index.js");
 
