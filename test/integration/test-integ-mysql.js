@@ -17,7 +17,7 @@ describe("sequelize/mysql", function(){
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
         sequelize = new Sequelize('test', 'test', 'test' , {
-            host: 'localhost',
+            host: '127.0.0.1',
             dialect: 'mysql',
             logging: false,
             port: 3800
