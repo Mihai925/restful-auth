@@ -66,3 +66,13 @@ Easy peasy, right? Unless you have an unsupported ORM or a really REALLY old ver
 ## APIs
 
 ## Contribute
+
+We welcome contributions from the community! Here are some ways you can help improve restful-auth:
+
+- Submit bugs and feature requests: Please use the [GitHub issue tracker](https://github.com/Mihai925/restful-auth/issues) to report any bugs or request new features.
+- Review pull requests: We appreciate any feedback and review of pull requests submitted by the community.
+- Write code: If you'd like to contribute code, please fork the repository and submit a pull request with your changes. Please ensure that your code adheres to the existing code style and passes the tests.
+- Improve documentation: If you find any mistakes or omissions in the documentation, please submit an issue or a pull request to help us improve it.
+- Spread the word: If you like restful-auth, please help us spread the word! Share the project with your friends and colleagues or give us a star on GitHub.
+
+We are grateful for any contributions and appreciate the time and effort of the community in making restful-auth better for everyone.
