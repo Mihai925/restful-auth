@@ -156,27 +156,6 @@ A middleware is a function that runs before the route handler, it is useful for 
 
 ### Available Middlewares
 
-#### CreateResetToken
-
-`createResetToken` middleware generates a unique token and stores it in the database. It accepts an `id` and optional `secondsDelay` parameter. The `id` parameter is the ID of the user for whom the reset token will be created, while `secondsDelay` is the time (in seconds) for which the token should be valid (default 24 hours). This middleware is useful when implementing a password reset functionality.
-
-Example:
-
-```js
-const { CreateResetToken } = plugin.middlewares;
-
-router.post('/forgot-password', async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
-
-  if (user) {
-    const resetToken = await CreateResetToken(user.id);
-    // send the reset token to the user's email
-  }
-
-  res.sendStatus(200);
-});
-```
 #### HasRole
 
 `HasRole` middleware checks whether the user has the required role to access a route. It accepts a `role` parameter that specifies the required role. If the user has the required role, the middleware calls the next middleware or route handler. Otherwise, it sends a 404 status code.
@@ -220,10 +199,6 @@ app.use(ra());
 // Use the middlewares
 const { CreateResetToken, HasRole, IsLoggedIn } = ra.middlewares;
 
-// Define the routes
-app.post('/forgot-password', async (req, res) => {
-  // use the CreateResetToken middleware
-});
 
 app.get('/admin', HasRole('admin'), (req, res) => {
   // use the HasRole middleware
@@ -236,6 +211,30 @@ app.get('/profile', IsLoggedIn(), (req, res) => {
 
 ### Usage
 To use the middlewares provided by the plugin, you need to install it first. After installing the plugin, you can access the middlewares using the middlewares property of the returned object.
+
+## Helper functions
+
+### CreateResetToken
+
+`createResetToken` generates a unique token and stores it in the database. It accepts an `id` and optional `secondsDelay` parameter. The `id` parameter is the ID of the user for whom the reset token will be created, while `secondsDelay` is the time (in seconds) for which the token should be valid (default 24 hours). This middleware is useful when implementing a password reset functionality.
+
+Example:
+
+```js
+const CreateResetToken = plugin.CreateResetToken;
+
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+
+  if (user) {
+    const resetToken = await CreateResetToken(user.id);
+    // send the reset token to the user's email
+  }
+
+  res.sendStatus(200);
+});
+```
 
 ## Contribute
 
