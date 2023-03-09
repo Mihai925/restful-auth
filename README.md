@@ -183,7 +183,6 @@ router.post('/forgot-password', async (req, res) => {
 
 Example:
 
-javascriptCopy code
 ```js
 const { HasRole } = plugin.middlewares;
 
@@ -197,7 +196,6 @@ router.get('/admin', HasRole('admin'), (req, res) => {
 
 Example:
 
-javascriptCopy code
 
 ```js
 const { IsLoggedIn } = plugin.middlewares;
