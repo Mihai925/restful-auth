@@ -94,7 +94,6 @@ bashCopy code
 
 Logs a user into the application.
 
-bashCopy code
 
 `POST /api/login`
 
@@ -118,7 +117,6 @@ bashCopy code
 
 Logs a user out of the application.
 
-bashCopy code
 
 `POST /api/logout`
 
@@ -133,7 +131,6 @@ bashCopy code
 
 Resets a user's password.
 
-bashCopy code
 
 `POST /api/reset`
 
