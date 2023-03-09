@@ -65,6 +65,94 @@ Easy peasy, right? Unless you have an unsupported ORM or a really REALLY old ver
 
 ## APIs
 
+### Register a new user
+
+Registers a new user with the application.
+
+bashCopy code
+
+`POST /api/register`
+
+#### Request Body
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | string | Yes | Unique identifier for the user. |
+| `password` | string | Yes | User's password. |
+| `role` | string | No | User's role (if applicable). |
+
+#### Responses
+
+| Status Code | Description |
+| --- | --- |
+| `200` | User successfully created. |
+| `400` | Bad request. |
+| `409` | User with given `id` already exists. |
+| `429` | Too many requests. |
+
+### Login
+
+Logs a user into the application.
+
+bashCopy code
+
+`POST /api/login`
+
+#### Request Body
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | string | Yes | Unique identifier for the user. |
+| `password` | string | Yes | User's password. |
+
+#### Responses
+
+| Status Code | Description |
+| --- | --- |
+| `200` | User successfully authenticated. Returns a JWT token. |
+| `400` | Bad request. |
+| `401` | Unauthorized. |
+| `429` | Too many requests. |
+
+### Logout
+
+Logs a user out of the application.
+
+bashCopy code
+
+`POST /api/logout`
+
+#### Responses
+
+| Status Code | Description |
+| --- | --- |
+| `200` | User successfully logged out. |
+| `429` | Too many requests. |
+
+### Reset Password
+
+Resets a user's password.
+
+bashCopy code
+
+`POST /api/reset`
+
+#### Request Body
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | string | Yes | Unique identifier for the user. |
+| `token` | string | Yes | Unique token sent to the user's email. |
+| `password` | string | Yes | User's new password. |
+
+#### Responses
+
+| Status Code | Description |
+| --- | --- |
+| `200` | Password successfully reset. |
+| `400` | Bad request. |
+| `404` | Token not found or expired. |
+| `429` | Too many requests. |
 ## Contribute
 
 We welcome contributions from the community! Here are some ways you can help improve restful-auth:
