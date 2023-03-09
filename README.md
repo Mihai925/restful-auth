@@ -194,10 +194,10 @@ const app = express();
 const ra = require('restful-auth');
 
 // Install the plugin
-app.use(ra());
+app.use(ra(/*other parameters here*/));
 
 // Use the middlewares
-const { CreateResetToken, HasRole, IsLoggedIn } = ra.middlewares;
+const { HasRole, IsLoggedIn } = ra.middlewares;
 
 
 app.get('/admin', HasRole('admin'), (req, res) => {
