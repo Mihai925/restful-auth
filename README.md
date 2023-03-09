@@ -69,7 +69,6 @@ Easy peasy, right? Unless you have an unsupported ORM or a really REALLY old ver
 
 Registers a new user with the application.
 
-bashCopy code
 
 `POST /api/register`
 
