@@ -16,7 +16,7 @@ describe("sequelize/postgresql", function(){
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
-        sequelize = new Sequelize('test', 'postgres', '' , {
+        sequelize = new Sequelize('test', 'test', 'test' , {
             host: 'localhost',
             dialect: 'postgres',
             logging: console.log,

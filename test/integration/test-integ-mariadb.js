@@ -16,7 +16,7 @@ describe("sequelize/mariadb", function(){
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
-        sequelize = new Sequelize('test', 'travis', 'travis' , {
+        sequelize = new Sequelize('test', 'test', 'test' , {
             host: 'localhost',
             dialect: 'mariadb',
             useSSL: false,
