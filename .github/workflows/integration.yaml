@@ -47,16 +47,16 @@ jobs:
         env:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
-          DB_USER: test
-          DB_PASSWORD: ""
+          DB_USER: root
+          DB_PASSWORD: "root"
           DB_NAME: test
         run: npm run test-integ-mysql
       - name: Run integration tests with PostgreSQL
         env:
           DB_HOST: 127.0.0.1
           DB_PORT: 5432
-          DB_USER: test
-          DB_PASSWORD: test
+          DB_USER: postgres
+          DB_PASSWORD: postgres
           DB_NAME: test
         run: npm run test-integ-psql
       - name: Run integration tests with MariaDB
