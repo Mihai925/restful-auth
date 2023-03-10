@@ -62,10 +62,12 @@ jobs:
           cors: '*'
       - name: Run unit tests
         run: npm test
-      - name: Run integration tests with DDB
-        run: npm run test-integ-ddb
       - name: Run integration tests with SQLite
         run: npm run test-integ-sqlite
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+      - name: Run integration tests with DDB
+        run: npm run test-integ-ddb
       - name: Run integration tests with MySQL
         env:
           DB_HOST: 127.0.0.1
