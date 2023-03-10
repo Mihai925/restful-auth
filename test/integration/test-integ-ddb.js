@@ -24,12 +24,12 @@ describe("dynamoose/dynamodb", function(){
         const User = require("../../models/dynamoose/user.js")(dynamoose);
         const ResetToken = require("../../models/dynamoose/resetToken.js")(dynamoose);
 
-        User.scan().exec((err, models) => {
+        await User.scan().exec((err, models) => {
             models.forEach(async (model) => {
                 await User.delete(model)
             });
         });
-        ResetToken.scan().exec((err, models) => {
+        await ResetToken.scan().exec((err, models) => {
             models.forEach(async (model) => {
                 await ResetToken.delete(model)
             });
