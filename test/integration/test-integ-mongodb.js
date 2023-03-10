@@ -20,7 +20,7 @@ describe("mongoose/mongodb", function(){
         delete mongoose.connection.models["User"];
         delete mongoose.connection.models["ResetToken"];
         const restfulAuth = require("../../index.js");
-        await mongoose.connect("mongodb://root:password@localhost:27017/mydb_test?authSource=mydb_test&w=1", 
+        await mongoose.connect("mongodb://localhost:27017/mydb_test", 
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,

@@ -48,9 +48,6 @@ jobs:
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.8.0
         with:
-          mongodb-username: root
-          mongodb-password: password
-          mongodb-db: mydb_test
           mongodb-port: 27017
       - name: Run unit tests
         run: npm test
