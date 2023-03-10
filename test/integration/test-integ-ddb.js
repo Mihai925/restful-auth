@@ -33,20 +33,16 @@ describe("dynamoose/dynamodb", function(){
     afterEach(async () => {
         const User = require("../../models/dynamoose/user.js")(dynamoose);
         const ResetToken = require("../../models/dynamoose/resetToken.js")(dynamoose);
-        await User.scan().exec((err, models) => {
-            if(!err) {
-                models.forEach(async (model) => {
+        const users = await User.scan().exec();
+        users.forEach(async (model) => {
                     await User.delete(model)
-                });
-            }
         });
-        await ResetToken.scan().exec((err, models) => {
-            if(!err) {
-                models.forEach(async (model) => {
+
+        const tokens = await ResetToken.scan().exec();
+        tokens.forEach(async (model) => {
                     await ResetToken.delete(model)
-                });
-            }
         });
+        
     });
     shared(chai, appWrapper, restfulAuthWrapper, expect);
 });
