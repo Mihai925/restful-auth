@@ -44,8 +44,7 @@ jobs:
             container port: 3307
             mysql database: 'test' 
             mysql root password: 'root'
-      - name: Run unit tests
-        run: npm test
+
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.8.0
         with:
@@ -53,6 +52,8 @@ jobs:
           mongodb-password: password
           mongodb-db: mydb_test
           mongodb-port: 27017
+      - name: Run unit tests
+        run: npm test
       #- name: Run integration tests with DDB
       #  run: npm run test-integ-ddb
       - name: Run integration tests with SQLite
