@@ -39,7 +39,7 @@ jobs:
         run: npm install
       - name: Start MariaDB
         uses: getong/mariadb-action@v1.1
-          with:
+        with:
             host port: 3800
             container port: 3307
             mysql database: 'test' 
