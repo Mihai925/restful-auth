@@ -51,8 +51,14 @@ jobs:
           mongodb-port: 27017
       - name: Run unit tests
         run: npm test
-      #- name: Run integration tests with DDB
-      #  run: npm run test-integ-ddb
+      - name: Setup DynamoDB Local
+        uses: rrainn/dynamodb-action@v2.0.1
+        with:
+          sharedDb: true
+          port: 3456
+          cors: '*'
+      - name: Run integration tests with DDB
+        run: npm run test-integ-ddb
       - name: Run integration tests with SQLite
         run: npm run test-integ-sqlite
       - name: Run integration tests with MySQL

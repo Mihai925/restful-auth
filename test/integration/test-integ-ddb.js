@@ -8,22 +8,18 @@ const shared = require("./shared.js");
 chai.use(chaiHttp);
 
 describe("dynamoose/dynamodb", function(){
-    var DdbLocalServer;
     var dynamoose;
     var restfulAuth;
     var express;
     var appWrapper = {};
     var restfulAuthWrapper = {};
-    var ddbInstance;
     beforeEach(async () => {
-        DdbLocalServer = require("dynamodb-local");
         dynamoose = require("dynamoose");
         restfulAuth = require("../../index.js");
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
         
-        ddbInstance = await new DdbLocalServer.launch("3456", null, ["-sharedDb"], true, true);
         dynamoose.aws.ddb.local("http://localhost:3456");
 
         restfulAuthWrapper.app = 
@@ -31,9 +27,6 @@ describe("dynamoose/dynamodb", function(){
                 type: "dynamoose",
                 db: dynamoose
             });
-    });
-    afterEach(async () => {
-        await DdbLocalServer.stop("3456");
     });
 
     shared(chai, appWrapper, restfulAuthWrapper, expect);
