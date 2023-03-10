@@ -37,6 +37,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: npm install
+      - name: Start MariaDB
+        uses: getong/mariadb-action@v1.1
+          with:
+            host port: 3800
+            container port: 3307
+            mysql database: 'test' 
+            mysql root password: 'root'
       - name: Run unit tests
         run: npm test
       #- name: Run integration tests with DDB

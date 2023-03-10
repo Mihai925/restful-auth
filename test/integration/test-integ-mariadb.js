@@ -16,12 +16,10 @@ describe("sequelize/mariadb", function(){
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
-        sequelize = new Sequelize('test', 'test', 'test' , {
+        sequelize = new Sequelize('test', 'root', 'root' , {
             host: 'localhost',
             dialect: 'mariadb',
-            useSSL: false,
-            logging: console.log,
-            port: 3306
+            port: 3800
         });
         const restfulAuth = require("../../index.js");
 

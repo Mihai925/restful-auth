@@ -19,7 +19,6 @@ describe("sequelize/mysql", function(){
         sequelize = new Sequelize('test', 'root', 'root' , {
             host: 'localhost',
             dialect: 'mysql',
-            logging: console.log,
             port: 3306
         });
         const restfulAuth = require("../../index.js");
