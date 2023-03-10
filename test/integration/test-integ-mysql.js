@@ -16,20 +16,21 @@ describe("sequelize/mysql", function(){
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
-        sequelize = new Sequelize('test', 'root', 'test' , {
+        sequelize = new Sequelize('test', 'root', '' , {
             host: 'localhost',
             dialect: 'mysql',
-            logging: false,
-            port: 3800
+            logging: console.log,
+            port: 3306
         });
         const restfulAuth = require("../../index.js");
-
         restfulAuthWrapper.app = 
             restfulAuth(appWrapper.app, {
                 type: "sequelize",
                 db: sequelize
             });
+        console.log("Checkpoint 3")
         await sequelize.sync({force: true});
+        console.log("Checkpoint 4")
     });
 
     shared(chai, appWrapper, restfulAuthWrapper, expect);

@@ -32,7 +32,7 @@ module.exports = (app, config) => {
   require("./api/logout")(app, logoutRateLimiter);
   require("./api/reset")(app, resetTokenRateLimiter, TokenWrapper, UserWrapper);
   return {
-    createResetToken: TokenCreationHelper.createResetToken,
+    CreateResetToken: TokenCreationHelper.CreateResetToken,
     middlewares: {
       HasRole: Middlewares.role,
       IsLoggedIn: Middlewares.login

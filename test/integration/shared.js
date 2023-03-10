@@ -52,7 +52,7 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
                 throw new Error(err);
             });
         expect(regResponse).to.have.status(200);
-        const token = await restfulAuthWrapper.app.createResetToken("john");
+        const token = await restfulAuthWrapper.app.CreateResetToken("john");
         const resetResponse = await chai.request(appWrapper.app)
             .post("/api/reset")
             .send({"id":"john", "password":"newpass", token})
@@ -84,7 +84,7 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
                 throw new Error(err);
             });
         expect(regResponse).to.have.status(200);
-        const token = await restfulAuthWrapper.app.createResetToken("john", -24*60*60);
+        const token = await restfulAuthWrapper.app.CreateResetToken("john", -24*60*60);
         const resetResponse = await chai.request(appWrapper.app)
             .post("/api/reset")
             .send({"id":"john", "password":"newpass", "token":token})
@@ -95,7 +95,7 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
     });
 
     it("should not create tokens for non-existent users", async () => {        
-        const token = await restfulAuthWrapper.app.createResetToken("john");
+        const token = await restfulAuthWrapper.app.CreateResetToken("john");
         expect(token).to.equal(undefined);
     });
 

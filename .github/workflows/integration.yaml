@@ -1,0 +1,77 @@
+name: Integration Tests
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["18"]
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: test
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_DB: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit tests
+        run: npm test
+      - name: Run integration tests with DDB
+        run: npm run test-integ-ddb
+      - name: Run integration tests with SQLite
+        run: npm run test-integ-sqlite
+      - name: Run integration tests with MySQL
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: travis
+          DB_PASSWORD: ""
+          DB_NAME: test
+        run: npm run test-integ-mysql
+      - name: Run integration tests with PostgreSQL
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: test
+        run: npm run test-integ-psql
+      - name: Run integration tests with MariaDB
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: travis
+          DB_PASSWORD: ""
+          DB_NAME: test
+        run: npm run test-integ-mariadb
+      - name: Run integration tests with MongoDB
+        env:
+          MONGODB_URL: mongodb://localhost/mydb_test
+        run: npm run test-integ-mongodb
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

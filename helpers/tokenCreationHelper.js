@@ -1,7 +1,7 @@
 module.exports = (UserWrapper, ResetTokenWrapper, TYPE) => {
     const { v4: uuidv4 } = require("uuid");
     return {
-        createResetToken: async (id, secondsDelay=60*60*24) => {
+        CreateResetToken: async (id, secondsDelay=60*60*24) => {
             var token = uuidv4();
             const now = new Date();
             const expiry = Math.floor(now.getTime() / 1000) + secondsDelay;

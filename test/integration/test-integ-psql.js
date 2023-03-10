@@ -19,7 +19,8 @@ describe("sequelize/postgresql", function(){
         sequelize = new Sequelize('test', 'postgres', '' , {
             host: 'localhost',
             dialect: 'postgres',
-            logging: false
+            logging: console.log,
+            port: 5432
         });
         const restfulAuth = require("../../index.js");
 
