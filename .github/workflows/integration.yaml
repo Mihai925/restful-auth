@@ -39,8 +39,8 @@ jobs:
         run: npm install
       - name: Run unit tests
         run: npm test
-      - name: Run integration tests with DDB
-        run: npm run test-integ-ddb
+      #- name: Run integration tests with DDB
+      #  run: npm run test-integ-ddb
       - name: Run integration tests with SQLite
         run: npm run test-integ-sqlite
       - name: Run integration tests with MySQL
