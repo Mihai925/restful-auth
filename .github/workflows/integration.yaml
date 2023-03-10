@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - develop
+    paths-ignore:
+      - '.github/project.yaml'
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'README.md'
+      - LICENSE
 
 jobs:
   test:
