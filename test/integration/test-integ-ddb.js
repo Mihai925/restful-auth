@@ -23,14 +23,14 @@ describe("dynamoose/dynamodb", function(){
         dynamoose.aws.ddb.local("http://localhost:3456");
         const User = require("../../models/dynamoose/user.js")(dynamoose);
         const ResetToken = require("../../models/dynamoose/resetToken.js")(dynamoose);
-        
+
         User.scanAll((err, models) => {
-            models.forEach((model) => {
+            models.forEach(async (model) => {
                 await User.delete(model)
             });
         });
         ResetToken.scanAll((err, models) => {
-            models.forEach((model) => {
+            models.forEach(async (model) => {
                 await ResetToken.delete(model)
             });
         });
