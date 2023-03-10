@@ -13,6 +13,7 @@ module.exports = (app, config) => {
   const Middlewares = require("./helpers/middlewares");
   const JWTSecret = require("./config/jwtConfig");
   const jwt = require("jsonwebtoken");
+  const session = require('express-session');
 
   const rateLimiter = require("./rate-limiter")(config);
   const registerRateLimiter = rateLimiter.getRegisterRateLimiter();
@@ -20,6 +21,7 @@ module.exports = (app, config) => {
   const logoutRateLimiter = rateLimiter.getLogoutRateLimiter();
   const resetTokenRateLimiter = rateLimiter.getLogoutRateLimiter();
 
+  app.use(session({ secret: JWTSecret.secret }));
   app.use(passport.initialize());
 
   //Create passports

@@ -40,7 +40,7 @@ module.exports = (chai, appWrapper, restfulAuthWrapper, expect) => {
                 throw new Error(err);
             });
         expect(loginResponse).to.have.status(200);
-        //expect(loginResponse.body).to.not.have.property("token");
+        expect(loginResponse.body).to.not.have.property("token");
         expect(loginResponse.body).to.have.property("auth").eql(false);
     });
 
