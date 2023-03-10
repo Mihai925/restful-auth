@@ -27,9 +27,7 @@ describe("sequelize/mysql", function(){
                 type: "sequelize",
                 db: sequelize
             });
-        console.log("Checkpoint 3")
         await sequelize.sync({force: true});
-        console.log("Checkpoint 4")
     });
 
     shared(chai, appWrapper, restfulAuthWrapper, expect);

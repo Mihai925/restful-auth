@@ -5,6 +5,7 @@ const expect = chai.expect;
 const { Sequelize } = require("sequelize");
 const shared = require("./shared.js");
 
+
 chai.use(chaiHttp);
 
 describe("dynamoose/dynamodb", function(){
@@ -19,9 +20,20 @@ describe("dynamoose/dynamodb", function(){
         express = require("express");
         appWrapper.app = express();
         appWrapper.app.use(bodyParser.json());
-        
         dynamoose.aws.ddb.local("http://localhost:3456");
-
+        const User = require("../../models/dynamoose/user.js")(dynamoose);
+        const ResetToken = require("../../models/dynamoose/resetToken.js")(dynamoose);
+        
+        User.scanAll((err, models) => {
+            models.forEach((model) => {
+                await User.delete(model)
+            });
+        });
+        ResetToken.scanAll((err, models) => {
+            models.forEach((model) => {
+                await ResetToken.delete(model)
+            });
+        });
         restfulAuthWrapper.app = 
             restfulAuth(appWrapper.app, {
                 type: "dynamoose",
