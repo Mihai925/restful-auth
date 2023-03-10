@@ -16,20 +16,10 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [12.x, 14.x, 16.x, 17.x, 18.x, 19.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - name: Set up MySQL
-      uses: mirromutth/mysql-action@v1.1
-      with:
-        host port: 3800 # Optional, default value is 3306. The port of host
-        container port: 3307 # Optional, default value is 3306. The port of container
-        character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
-        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
-        mysql version: '5.7' # Optional, default value is "latest". The version of the MySQL
-        mysql database: 'test' # Optional, default value is "test". The specified database which will be create
-        mysql root password: 'test' # Required if "mysql user" is empty, default is empty. The root superuser password
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       if: ${{ !env.ACT }}
@@ -39,5 +29,5 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
-    - run: npm run test-integ-mysql
+    - run: npm run test
+    - run: npm run test-integ-sqlite
